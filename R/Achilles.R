@@ -151,6 +151,10 @@ achilles <- function(connectionDetails,
   totalStart <- Sys.time()
   achillesSql <- c()
 
+  print(
+    "test"
+  )
+
   # Check if the correct parameters are supplied when running in sqlOnly mode
   if (sqlOnly &&
       missing(connectionDetails) && is.null(sqlDialect)) {
@@ -412,6 +416,11 @@ achilles <- function(connectionDetails,
                                         analysisDetails$ANALYSIS_NAME[analysisDetails$ANALYSIS_ID ==
           mainSql$analysisId]))
         tryCatch({
+
+          ParallelLogger::logInfo(sprintf("Analysis %d, Sql %s",
+                                          mainSql$analysisId,
+                                          mainSql$sql))
+
           DatabaseConnector::executeSql(connection = connection,
                                         sql = mainSql$sql,
                                         errorReportFile = file.path(outputFolder,
